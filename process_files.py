@@ -30,10 +30,10 @@ def process_file(file):
     except Exception as e:
         print(e)
 
-    
+
 input_files = sorted(list(iglob(join('data\L2', '*'), recursive=True)))
 
-#The Parallel function utilizes multiple CPU cores during the processing,
+#The Parallel class utilizes multiple CPU cores during the processing,
 #and completes the task signficantly faster
 Parallel(n_jobs=8, verbose=10)(delayed(process_file)(file) for file in input_files)
 

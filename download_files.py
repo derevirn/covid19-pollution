@@ -2,8 +2,8 @@ from sentinelsat import SentinelAPI, geojson_to_wkt, read_geojson
 
 user = 's5pguest' 
 password = 's5pguest' 
-#This is GeoJSON coordinates file with a rectangular shape,
-#covering the geographic region of Italy and Greece.
+#This is a GeoJSON coordinates file that has a rectangular shape,
+#and covers the geographic region of Italy and Greece.
 area = r'map.geojson'
 
 #Accessing the Sentinel-5P API to download the Nitrogen Dioxide (NO2) products
