@@ -97,7 +97,7 @@ def generate_graph(coordinates, country, region=None):
     ax1.text(0, 1.02, region + ', March 2019', fontsize = 13, transform=ax1.transAxes)
     ax2.text(0, 1.02, region + ', March 2020', fontsize = 13, transform=ax2.transAxes)
     
-    plt.savefig('images\pollution_' + region + '.png', bbox_inches='tight', dpi=300);
+    plt.savefig('images\pollution_' + region + '.png', bbox_inches='tight', dpi=150);
     
     
 coords_italy = [6.3, 19.1, 36.3, 47.5]
