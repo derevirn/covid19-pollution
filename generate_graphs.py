@@ -10,7 +10,9 @@ import pandas as pd
 import geopandas as gpd
 
 
-def generate_graph(country, coordinates):
+def generate_graph(coordinates, country, region=None):
+    
+    if region == None: region = country
     
     files_L2 = sorted(list(iglob(join('data\L2', '*'), recursive=True)))
     files_L3 = sorted(list(iglob(join('data\L3', '*'), recursive=True)))
@@ -55,9 +57,9 @@ def generate_graph(country, coordinates):
     # Adding the map of specified country
     shp_country = shapereader.natural_earth(resolution='10m', 
                                         category='cultural', 
-                                        name='admin_0_countries')
+                                        name='admin_1_states_provinces')
     df = gpd.read_file(shp_country)
-    poly = df.loc[df['ADMIN'] == country]['geometry']
+    poly = df.loc[df['admin'] == country]['geometry']
     
     ax1.add_geometries(poly, crs=ccrs.PlateCarree(), facecolor='none', edgecolor='black', zorder=3)
     ax2.add_geometries(poly, crs=ccrs.PlateCarree(), facecolor='none', edgecolor='black', zorder=3)
@@ -84,25 +86,29 @@ def generate_graph(country, coordinates):
     gl2.yformatter = LATITUDE_FORMATTER
     
     # set colorbar properties
-    cbar_ax = fig.add_axes([0.12, 0.07, 0.25, 0.01])
+    cbar_ax = fig.add_axes([0.13, 0.13, 0.15, 0.01])
     cbar = plt.colorbar(im1, cax=cbar_ax, orientation='horizontal', ticks=[0,1,5,10,15])
-    cbar.set_label(r"$10^{15}$ molecules / cm$_2$)", labelpad=-50, fontsize=14)
+    cbar.set_label(r"$10^{15}$ molecules / cm$_2$)", labelpad=-50, fontsize=13)
     cbar.outline.set_visible(False)
     cbar.ax.set_yticklabels(['0','1', '5', '10', '15'])
     
     # Add text
-    fig.text(0, 1.07, 'Average NO2 concentration', fontsize = 17, transform=ax1.transAxes)
-    #fig.text(0.61, -0.21, "Data: ESA Sentinel-5p / TROPOMI", fontsize=12, color='gray', multialignment='right',transform=ax1.transAxes)
-    ax1.text(0, 1.02, country + ', March 2019', fontsize = 13, transform=ax1.transAxes)
-    ax2.text(0, 1.02, country + ', March 2020', fontsize = 13, transform=ax2.transAxes)
+    fig.text(0, 1.1, 'Average NO2 concentration', fontsize = 17, transform=ax1.transAxes)
+    ax1.text(0, 1.02, region + ', March 2019', fontsize = 13, transform=ax1.transAxes)
+    ax2.text(0, 1.02, region + ', March 2020', fontsize = 13, transform=ax2.transAxes)
     
-    plt.savefig('images\pollution_' + country + '.png', bbox_inches='tight', dpi=600);
+    plt.savefig('images\pollution_' + region + '.png', bbox_inches='tight', dpi=300);
     
     
 coords_italy = [6.3, 19.1, 36.3, 47.5]
+coords_lombardy = [8.4, 11.5, 44.6, 46.6]
 coords_greece = [19.3, 28.9, 34.7, 41.8]
+coords_attica = [22.8, 24.1, 37.6, 38.4]
 
 
-generate_graph('Italy', coords_italy)
-generate_graph('Greece', coords_greece)
+generate_graph(coords_italy, 'Italy')
+generate_graph(coords_lombardy, 'Italy', 'Lombardy')
+generate_graph(coords_greece, 'Greece')
+generate_graph(coords_attica, 'Greece', 'Attica')
+
 
