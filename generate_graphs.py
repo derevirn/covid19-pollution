@@ -65,10 +65,10 @@ def generate_graph(coordinates, country, region=None):
     ax2.add_geometries(poly, crs=ccrs.PlateCarree(), facecolor='none', edgecolor='black', zorder=3)
     
     # Add NO2 data
-    im1 = no2_MCH_19_mean.plot.pcolormesh(ax=ax1, transform=ccrs.PlateCarree(), cmap='magma_r', vmin=0, vmax=15, x='longitude', y='latitude', zorder=3)
+    im1 = no2_MCH_19_mean.plot.pcolormesh(ax=ax1, transform=ccrs.PlateCarree(), cmap='jet', vmin=0, vmax=15, x='longitude', y='latitude', zorder=3)
     im1.colorbar.remove()
     
-    im2 = no2_MCH_20_mean.plot.pcolormesh(ax=ax2, transform=ccrs.PlateCarree(), cmap='magma_r', vmin=0, vmax=15, x='longitude', y='latitude', zorder=3)
+    im2 = no2_MCH_20_mean.plot.pcolormesh(ax=ax2, transform=ccrs.PlateCarree(), cmap='jet', vmin=0, vmax=15, x='longitude', y='latitude', zorder=3)
     im2.colorbar.remove()
     
     
